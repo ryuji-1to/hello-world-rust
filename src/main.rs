@@ -1,5 +1,8 @@
 fn main() {
     let message = "hoge";
+    for _i in 0..3 {
+        println!("{}", message);
+    }
     // if true {
     //     message = "hello, foo";
     // } else {
@@ -21,8 +24,19 @@ fn main() {
     println!("{}", this_is_array[0]);
     println!("{:?}", v);
     println!("{:?}", _v);
-
-    for _i in 0..3 {
-        println!("{}", message);
-    }
+    // String type
+    let _message_2 = String::from("hello world");
+    // String slice
+    let _message_3 = "hello world";
+    let _message_string = _message_3.to_string();
+    let mut message_push = String::from("hello");
+    message_push.push_str(", world!");
+    println!("{:?}", message_push);
+    // hash map
+    let mut scores = std::collections::HashMap::new();
+    scores.insert("Sato", 100);
+    scores.insert("Tanaka", 90);
+    scores.entry("Tanaka").or_insert(100);
+    let solar_distance = std::collections::HashMap::from([("Mercury", 0.4), ("Venus", 0.7)]);
+    println!("{:?}", solar_distance);
 }
