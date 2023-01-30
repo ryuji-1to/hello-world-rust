@@ -10,16 +10,6 @@ fn add_v2(x: i32, y: i32) -> i32 {
     x + y
 }
 
-enum Color {
-    Red,
-    Blue,
-    Green,
-    Hex(String),
-}
-
-const red = Color::Red;
-const hex = Color::Hex("ffffff".to_string());
-
 fn main() {
     let message = "hoge";
     for _i in 0..3 {
