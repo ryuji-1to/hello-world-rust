@@ -10,6 +10,10 @@ fn add_v2(x: i32, y: i32) -> i32 {
     x + y
 }
 
+fn change_string(x: &str) -> String {
+    x.to_string()
+}
+
 enum Color {
     Red,
     Blue,
@@ -17,8 +21,9 @@ enum Color {
     Hex(String),
 }
 
-const red = Color::Red;
-const hex = Color::Hex("ffffff".to_string());
+// const HEX_STR: String = change_string("ffffff");
+// const RED: Color = Color::Red;
+// const HEX: Color = Color::Hex(HEX_STR);
 
 fn main() {
     let message = "hoge";
