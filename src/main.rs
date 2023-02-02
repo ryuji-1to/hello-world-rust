@@ -25,6 +25,15 @@ enum Color {
 // const RED: Color = Color::Red;
 // const HEX: Color = Color::Hex(HEX_STR);
 
+fn always_error() -> Result<(), String> {
+    Err("always error".to_string())
+}
+
+fn might_fail() -> Result<(), String> {
+    let _result = always_error()?;
+    Ok(())
+}
+
 fn main() {
     let message = "hoge";
     for _i in 0..3 {
@@ -74,4 +83,13 @@ fn main() {
     println!("{:?}", add_v2(4, 9));
     let _f = if true { 10 } else { 20 };
     let _g = { 10 * 2 };
+    let some: Result<&str, &str> = Ok("ok");
+    println!("{:?}", some);
+    let err: Result<&str, &str> = Err("error");
+    println!("{:?}", err);
+    let message = match might_fail() {
+        Ok(_) => "処理に成功".to_string(),
+        Err(cause_message) => cause_message,
+    };
+    println!("{:?}", message);
 }
