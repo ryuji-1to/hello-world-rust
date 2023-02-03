@@ -3,6 +3,14 @@ fn return_void() {
     // implicit return >>> ()
     return ();
 }
+/// x plus y
+///
+/// # Examples
+///
+/// ```
+/// let r = add(1,10);
+/// assert_eq!(11,r);
+/// ```
 fn add(x: i32, y: i32) -> i32 {
     return x + y;
 }
@@ -32,6 +40,19 @@ fn always_error() -> Result<(), String> {
 fn might_fail() -> Result<(), String> {
     let _result = always_error()?;
     Ok(())
+}
+
+// macro
+macro_rules! sum {
+    ( $($x:expr),*)=>{
+        {
+            let mut result = 0;
+            $(
+            result = result + $x;
+        )*
+            result
+        }
+    };
 }
 
 fn main() {
@@ -92,4 +113,11 @@ fn main() {
         Err(cause_message) => cause_message,
     };
     println!("{:?}", message);
+    // println!("before panic!");
+    // panic!("hoge");
+    // println!("after panic!");
+    let input: Result<&str, &str> = Ok("test");
+    let input = input.unwrap();
+    println!("{:?}", input);
+    println!("{}", sum![1, 2, 3, 4, 5]);
 }
