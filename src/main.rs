@@ -82,6 +82,28 @@ fn string_to_color_token(value: &str) -> Option<Color> {
     }
 }
 
+fn add_until(start: i32, end: i32) -> i32 {
+    let mut sum = 0;
+    let mut temp = start;
+    loop {
+        sum += temp;
+        if temp == end {
+            break sum;
+        }
+        temp += 1;
+    }
+}
+
+fn add_until_while(start: i32, end: i32) -> i32 {
+    let mut sum = 0;
+    let mut temp = start;
+    while temp <= end {
+        sum += temp;
+        temp += 1;
+    }
+    sum
+}
+
 // macro
 macro_rules! sum {
     ( $($x:expr),*)=>{
@@ -169,4 +191,13 @@ fn main() {
         None => "Nothing".to_string(),
     };
     println!("{:?}", a);
+    if let Some(color) = string_to_color_token("red") {
+        println!("red");
+    }
+    let loop_result = add_until(1, 3);
+    println!("{}", loop_result);
+    let scores = vec![100, 30, 80, 70, 95];
+    for score in scores.iter() {
+        println!("score is {}", score);
+    }
 }
