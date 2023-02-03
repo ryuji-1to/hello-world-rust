@@ -42,6 +42,46 @@ fn might_fail() -> Result<(), String> {
     Ok(())
 }
 
+fn fizz_buzz(value: i32) -> String {
+    let result = if value % 15 == 0 {
+        "fizz buzz".to_string()
+    } else if value % 5 == 0 {
+        "buzz".to_string()
+    } else if value % 3 == 0 {
+        "fizz".to_string()
+    } else {
+        value.to_string()
+    };
+    result
+}
+
+fn fizz_buzz_v2(value: i32) -> String {
+    let result = match value {
+        v if v % 15 == 0 => "fizz buzz".to_string(),
+        v if v % 5 == 0 => "buzz".to_string(),
+        v if v % 3 == 0 => "fizz".to_string(),
+        _ => value.to_string(),
+    };
+    result
+}
+
+fn if_value() -> String {
+    let mut result = "".to_string();
+    if true {
+        result = "hello".to_string();
+    }
+    result
+}
+
+fn string_to_color_token(value: &str) -> Option<Color> {
+    match value {
+        "red" => Some(Color::Red),
+        "blue" => Some(Color::Blue),
+        "green" => Some(Color::Green),
+        _ => None,
+    }
+}
+
 // macro
 macro_rules! sum {
     ( $($x:expr),*)=>{
@@ -120,4 +160,13 @@ fn main() {
     let input = input.unwrap();
     println!("{:?}", input);
     println!("{}", sum![1, 2, 3, 4, 5]);
+    println!("{}", fizz_buzz_v2(1));
+    println!("{}", fizz_buzz_v2(3));
+    println!("{}", fizz_buzz_v2(5));
+    println!("{}", fizz_buzz_v2(15));
+    let a = match string_to_color_token("red") {
+        Some(a) => "found it".to_string(),
+        None => "Nothing".to_string(),
+    };
+    println!("{:?}", a);
 }
