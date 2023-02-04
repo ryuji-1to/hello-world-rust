@@ -117,6 +117,18 @@ macro_rules! sum {
     };
 }
 
+fn hello_print(message: String) {
+    println!("hello {}", message);
+}
+
+fn hello_print_v2(message: &str) {
+    println!("hello {}", message);
+}
+
+fn print(value: i32) {
+    println!("{}", value);
+}
+
 fn main() {
     let message = "hoge";
     for _i in 0..3 {
@@ -200,4 +212,23 @@ fn main() {
     for score in scores.iter() {
         println!("score is {}", score);
     }
+    // syoyuken
+    let a = String::from("hoge");
+    let b = a;
+    println!("{}", b);
+    let c = 100;
+    let d = c;
+    println!("{}", c);
+    // move
+    let world = String::from("world");
+    // move to hello_print
+    hello_print(world);
+    // error boooom!!!
+    // println!("main print {}", world);
+    let world_v2 = String::from("world");
+    hello_print_v2(&world_v2);
+    println!("main print {}", world_v2);
+    let e = 999;
+    let f = &e;
+    print(*f);
 }
