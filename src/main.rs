@@ -1,3 +1,5 @@
+use std::fmt::{self, Display};
+
 fn void() {}
 fn return_void() {
     // implicit return >>> ()
@@ -148,6 +150,123 @@ fn fizz(value: i32) -> String {
     result
 }
 
+fn hello() -> &'static str {
+    "hello"
+}
+
+// lifetime
+fn life_time() {
+    println!("{}", hello());
+}
+
+// heap
+fn heap() {
+    let a = Box::new("test");
+    println!("{}", a);
+}
+
+// structure
+
+struct User {
+    name: String,
+    age: i32,
+}
+
+struct StraightLine(i32, i32);
+struct Fraction(u32, u32);
+
+impl Fraction {
+    // numerator 分子, denominator: 分母
+    fn new(numerator: u32, denominator: u32) -> Self {
+        let gcf_value = Self::gcf(numerator, denominator);
+        Self(numerator / gcf_value, denominator / gcf_value)
+    }
+
+    fn gcf(value1: u32, value2: u32) -> u32 {
+        let (mut a, mut b) = if value1 > value2 {
+            (value1, value2)
+        } else {
+            (value2, value1)
+        };
+        let mut r = a % b;
+        while r != 0 {
+            a = b;
+            b = r;
+            r = a % b;
+        }
+        b
+    }
+}
+
+impl Display for Fraction {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}/{}", &self.0, &self.1)
+    }
+}
+
+impl Display for User {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "user name is {}, age is {}", &self.name, &self.age)
+    }
+}
+// Self implement User
+impl User {
+    fn new(name: String, age: i32) -> Self {
+        Self { name, age }
+    }
+
+    fn description(&self) -> String {
+        format!("user name is {}, age is {}", &self.name, &self.age)
+    }
+
+    fn rename(&mut self, name: String) {
+        self.name = name;
+    }
+}
+
+trait Area {
+    fn area(&self) -> u32;
+}
+
+struct Square(u32);
+
+impl Area for Square {
+    fn area(&self) -> u32 {
+        self.0.pow(2)
+    }
+}
+
+impl Square {
+    fn new(side: u32) -> Self {
+        Self(side)
+    }
+}
+
+fn calc_square() {
+    let my_square = Square::new(5);
+    println!("area is {}", my_square.area());
+}
+
+fn structure() {
+    let name = "sato".to_string();
+    let age = 30;
+    let user = User { name, age };
+    println!("name is {}, age is {}", user.name, user.age);
+}
+
+fn class() {
+    let mut user = User::new(String::from("sato"), 20);
+    user.rename(String::from("kato"));
+    println!("{}", user.description());
+    println!("name is {}", user.name);
+    println!("{}", user);
+}
+
+fn fraction() {
+    let a = Fraction::new(8, 18);
+    println!("{}", a);
+}
+
 fn main() {
     let message = "hoge";
     for _i in 0..3 {
@@ -252,4 +371,10 @@ fn main() {
     print(*f);
     println!("1 {}", fizz(1));
     println!("1 {}", fizz(3));
+    life_time();
+    heap();
+    structure();
+    class();
+    calc_square();
+    fraction();
 }
