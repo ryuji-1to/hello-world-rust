@@ -117,6 +117,10 @@ macro_rules! sum {
     };
 }
 
+// clone method
+#[derive(Clone)]
+struct Line(i32, i32);
+
 fn hello_print(message: String) {
     println!("hello {}", message);
 }
@@ -127,6 +131,21 @@ fn hello_print_v2(message: &str) {
 
 fn print(value: i32) {
     println!("{}", value);
+}
+
+// just take shoyuken function
+fn take<T>(_value: T) {}
+
+fn fizz(value: i32) -> String {
+    let result = if value % 3 == 0 {
+        String::from("fizz")
+    } else {
+        format!("{}", value)
+    };
+    // clone if you use result
+    let clone_result = result.clone();
+    take(clone_result);
+    result
 }
 
 fn main() {
@@ -231,4 +250,6 @@ fn main() {
     let e = 999;
     let f = &e;
     print(*f);
+    println!("1 {}", fizz(1));
+    println!("1 {}", fizz(3));
 }
