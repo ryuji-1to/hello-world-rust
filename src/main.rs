@@ -1,5 +1,20 @@
+use std::cmp::{Eq, PartialEq};
 use std::fmt::{self, Display};
 use std::ops::Add;
+mod foo;
+
+mod parent {
+    pub mod child {
+        pub fn print_hoge() {
+            println!("hoge");
+        }
+    }
+    mod private_child {
+        pub fn print_hoge() {
+            println!("hoge");
+        }
+    }
+}
 
 fn void() {}
 fn return_void() {
@@ -174,6 +189,8 @@ struct User {
 }
 
 struct StraightLine(i32, i32);
+
+#[derive(Debug, PartialEq, Eq)]
 struct Fraction(u32, u32);
 
 impl Fraction {
@@ -200,6 +217,7 @@ impl Fraction {
 }
 
 impl Add for Fraction {
+    // 関連型
     type Output = Self;
     fn add(self, other: Self) -> Self {
         let lcm = self.1 / Self::gcf(self.1, other.1) * other.1;
@@ -278,6 +296,11 @@ fn fraction() {
     let a = Fraction::new(8, 18);
     println!("{}", a);
 }
+
+// #[derive(PartialEq, Eq)]
+// struct Point {
+//     value: f64,
+// }
 
 fn main() {
     let message = "hoge";
@@ -392,4 +415,11 @@ fn main() {
     let f_a = Fraction::new(8, 18);
     let f_b = Fraction::new(1, 2);
     println!("fraction {}", f_a + f_b);
+    let nan = f64::NAN;
+    assert!(nan != nan);
+    // let p1 = Point { value: f64::NAN };
+    // assert!(p1 == p1);
+    use crate::parent::child::print_hoge;
+    print_hoge();
+    foo::bar::baz();
 }
