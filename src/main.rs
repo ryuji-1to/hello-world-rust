@@ -1,4 +1,5 @@
 use std::fmt::{self, Display};
+use std::ops::Add;
 
 fn void() {}
 fn return_void() {
@@ -198,6 +199,17 @@ impl Fraction {
     }
 }
 
+impl Add for Fraction {
+    type Output = Self;
+    fn add(self, other: Self) -> Self {
+        let lcm = self.1 / Self::gcf(self.1, other.1) * other.1;
+
+        let a = self.0 * (lcm / self.1);
+        let b = other.0 * (lcm / other.1);
+        Fraction::new(a + b, lcm)
+    }
+}
+
 impl Display for Fraction {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}/{}", &self.0, &self.1)
@@ -377,4 +389,7 @@ fn main() {
     class();
     calc_square();
     fraction();
+    let f_a = Fraction::new(8, 18);
+    let f_b = Fraction::new(1, 2);
+    println!("fraction {}", f_a + f_b);
 }
