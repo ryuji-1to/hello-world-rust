@@ -1,6 +1,10 @@
+use anyhow::{Context, Result};
+use core::fmt::Display;
 use std::cmp::{Eq, PartialEq};
-use std::fmt::{self, Display};
+use std::fmt;
+use std::fs::File;
 use std::ops::Add;
+use thiserror::Error;
 mod foo;
 
 mod parent {
@@ -14,6 +18,37 @@ mod parent {
             println!("hoge");
         }
     }
+}
+
+#[derive(Debug, Error)]
+enum ApiError {
+    InternalServerError(String),
+    NotFound,
+}
+
+impl fmt::Display for ApiError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "[ApiError]")
+    }
+}
+
+impl error::Error for ApiError {}
+
+fn fetch_api() -> Result<(), ApiError> {
+    Err(ApiError::InternalServerError(
+        "[always_my_error]".to_string(),
+    ))
+}
+
+fn maybe_fail() -> Result<(), Box<dyn error::Error>> {
+    let _r = fetch_api()?;
+    let _f = File::open("hoge.txt")?;
+    Ok(())
+}
+
+fn treat_error() -> Result<(), Box<dyn error::Error>> {
+    let _l = maybe_fail()?;
+    Ok(())
 }
 
 fn void() {}
@@ -422,6 +457,7 @@ fn main() {
     use crate::parent::child::print_hoge;
     print_hoge();
     foo::bar::baz();
+    treat_error();
 }
 
 // test
