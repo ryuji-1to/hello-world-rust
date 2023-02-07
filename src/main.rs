@@ -423,3 +423,35 @@ fn main() {
     print_hoge();
     foo::bar::baz();
 }
+
+// test
+
+#[derive(Debug, PartialEq, Eq)]
+struct Book {
+    name: String,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn add_test() {
+        assert_eq!(2, add(1, 1));
+    }
+
+    #[test]
+    fn book_test() {
+        let book1 = Book {
+            name: "book name".to_string(),
+        };
+        let book2 = Book {
+            name: "book name".to_string(),
+        };
+        assert_eq!(book1, book2);
+    }
+
+    #[test]
+    fn return_result_test() -> Result<(), ()> {
+        Ok(())
+    }
+}
